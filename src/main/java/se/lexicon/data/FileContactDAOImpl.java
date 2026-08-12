@@ -37,52 +37,36 @@ public class FileContactDAOImpl implements ContactDAO {
                 String[] parts = line.split(",");
 
                 if (parts.length == 2) {
-                    contacts.add(
-                            new Contact(parts[0], parts[1])
-                    );
+                    contacts.add(new Contact(parts[0], parts[1]));
                 }
             }
 
         } catch (IOException e) {
-            throw new ContactStorageException(
-                    "Could not read contacts.",
-                    e
-            );
+            throw new ContactStorageException("Could not read contacts.", e);
         }
 
         return contacts;
     }
 
     @Override
-    public void save(Contact contact)
-            throws ContactStorageException, DuplicateContactException {
+    public void save(Contact contact) throws ContactStorageException, DuplicateContactException {
 
         if (findByName(contact.getName()) != null) {
-            throw new DuplicateContactException(
-                    "A contact with that name already exists."
-            );
+            throw new DuplicateContactException("A contact with that name already exists.");
         }
 
-        try (BufferedWriter writer = Files.newBufferedWriter(
-                filePath,
-                StandardOpenOption.CREATE,
-                StandardOpenOption.APPEND
-        )) {
+        try (BufferedWriter writer = Files.newBufferedWriter(filePath, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
 
             writer.write(contact.toString());
             writer.newLine();
 
         } catch (IOException e) {
-            throw new ContactStorageException(
-                    "Could not save contact.",
-                    e
-            );
+            throw new ContactStorageException("Could not save contact.", e);
         }
     }
 
     @Override
-    public Contact findByName(String name)
-            throws ContactStorageException {
+    public Contact findByName(String name) throws ContactStorageException {
 
         for (Contact contact : findAll()) {
             if (contact.getName().equalsIgnoreCase(name)) {

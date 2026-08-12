@@ -4,29 +4,19 @@ import se.lexicon.view.ContactView;
 
 public class ExceptionHandler {
 
-    public static void handle(
-            Exception e,
-            ContactView view
-    ) {
-        if (e instanceof IllegalArgumentException) {
-            view.displayError(
-                    "Invalid input: " + e.getMessage()
-            );
+    public static void handle(Exception e, ContactView view) {
+        switch (e) {
+            case IllegalArgumentException ex ->
+                    view.displayError("Invalid input: " + ex.getMessage());
 
-        } else if (e instanceof DuplicateContactException) {
-            view.displayError(
-                    "Duplicate contact: " + e.getMessage()
-            );
+            case DuplicateContactException ex ->
+                    view.displayError("Duplicate contact: " + ex.getMessage());
 
-        } else if (e instanceof ContactStorageException) {
-            view.displayError(
-                    "Storage error: " + e.getMessage()
-            );
+            case ContactStorageException ex ->
+                    view.displayError("Storage error: " + ex.getMessage());
 
-        } else {
-            view.displayError(
-                    "Unexpected error: " + e.getMessage()
-            );
+            default ->
+                    view.displayError("Unexpected error: " + e.getMessage());
         }
     }
 }

@@ -10,8 +10,7 @@ public interface ContactDAO {
 
     List<Contact> findAll() throws ContactStorageException;
 
-    void save(Contact contact)
-            throws ContactStorageException, DuplicateContactException;
+    void save(Contact contact) throws ContactStorageException, DuplicateContactException;
 
     Contact findByName(String name) throws ContactStorageException;
 }

@@ -28,9 +28,7 @@ public class Contact {
 
     public void setPhoneNumber(String phoneNumber) {
         if (phoneNumber == null || !phoneNumber.matches("^\\d{10}$")) {
-            throw new IllegalArgumentException(
-                    "Phone number must contain exactly 10 digits."
-            );
+            throw new IllegalArgumentException("Phone number must contain exactly 10 digits.");
         }
 
         this.phoneNumber = phoneNumber;
